@@ -1,0 +1,40 @@
+<section class="coral">
+    <h2>C кем вы отправитесь в путешествие?</h2>
+    <ul>
+        <li>
+            <article>
+                <h3>С семьей</h3>
+                <span>Делиться моментами счастья</span>
+                <button data-route-switch="default">Default</button>
+            </article>
+        </li>
+        <li>
+            <article>
+                <h3>С любимым человеком</h3>
+                <span>Создавать воспоминания вдвоем</span>
+                <button data-route-switch="google">Google</button>
+            </article>
+        </li>
+        <li>
+            <article>
+                <h3>В одиночку</h3>
+                <span>Перезагрузиться и вдохновиться</span>
+                <button data-route-switch="yandex">Yandex</button>
+            </article>
+        </li>
+    </ul>
+
+    <div data-router-content>
+        <div data-route-content="default">
+            Дефолт
+        </div>
+
+        <div data-route-content="google" hidden>
+            Гугл
+        </div>
+
+        <div data-route-content="yandex" hidden>
+            Яндекс
+        </div>
+    </div>
+</section>
