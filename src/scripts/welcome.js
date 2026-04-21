@@ -1,96 +1,173 @@
 export default function initContentRouter() {
+	const PARAM_NAME = "utm_term";
+	const DEFAULT_ROUTE = "false";
+	const CONTAINER_SELECTOR = "[data-router-content]";
+	const ITEM_SELECTOR = "[data-route-content]";
+	const TRIGGER_SELECTOR = "[data-route-switch]";
+	const STATE_KEY = "__contentRouter";
 
-  const PARAM_NAME = 'utm_source';
-  const DEFAULT_ROUTE = 'default';
-  const CONTAINER_SELECTOR = '[data-router-content]';
-  const ITEM_SELECTOR = '[data-route-content]';
+	if (window.routeContentSwitcher?.destroy) {
+		window.routeContentSwitcher.destroy();
+	}
 
-  function getUrl() {
-    return new URL(window.location.href);
-  }
+	let isInitialized = false;
 
-  function ensureRouteParam() {
-    const url = getUrl();
+	function getUrl() {
+		return new URL(window.location.href);
+	}
 
-    if (!url.searchParams.get(PARAM_NAME)) {
-      url.searchParams.set(PARAM_NAME, DEFAULT_ROUTE);
-      history.replaceState({}, '', url.toString());
-    }
-  }
+	function getCurrentRoute() {
+		const url = getUrl();
+		return url.searchParams.get(PARAM_NAME) || DEFAULT_ROUTE;
+	}
 
-  function getCurrentRoute() {
-    const url = getUrl();
-    return url.searchParams.get(PARAM_NAME) || DEFAULT_ROUTE;
-  }
+	function getContainers() {
+		return document.querySelectorAll(CONTAINER_SELECTOR);
+	}
 
-  function setRoute(route, {replace = false} = {}) {
-    const url = getUrl();
-    url.searchParams.set(PARAM_NAME, route);
+	function buildState(route) {
+		return {
+			[STATE_KEY]: true,
+			route,
+		};
+	}
 
-    if (replace) {
-      history.replaceState({}, '', url.toString());
-    } else {
-      history.pushState({}, '', url.toString());
-    }
+	function ensureRouteParam() {
+		const url = getUrl();
+		const currentRoute = url.searchParams.get(PARAM_NAME) || DEFAULT_ROUTE;
 
-    render();
-  }
+		if (!url.searchParams.get(PARAM_NAME)) {
+			url.searchParams.set(PARAM_NAME, currentRoute);
+			history.replaceState(buildState(currentRoute), "", url.toString());
+			return;
+		}
 
-  function render() {
-    const container = document.querySelector(CONTAINER_SELECTOR);
-    if (!container) return;
+		if (!history.state || history.state[STATE_KEY] !== true) {
+			history.replaceState(buildState(currentRoute), "", url.toString());
+		}
+	}
 
-    const currentRoute = getCurrentRoute();
-    const items = container.querySelectorAll(ITEM_SELECTOR);
+	function render() {
+		const containers = getContainers();
+		if (!containers.length) return;
 
-    let matched = false;
+		const currentRoute = getCurrentRoute();
 
-    items.forEach(item => {
-      const route = item.getAttribute('data-route-content');
-      const isActive = route === currentRoute;
+		containers.forEach((container) => {
+			const items = container.querySelectorAll(ITEM_SELECTOR);
+			let matched = false;
 
-      item.hidden = !isActive;
+			items.forEach((item) => {
+				const route = item.getAttribute("data-route-content");
+				const isActive = route === currentRoute;
 
-      if (isActive) {
-        matched = true;
-      }
-    });
+				item.hidden = !isActive;
 
-    if (!matched) {
-      items.forEach(item => {
-        const isDefault = item.getAttribute('data-route-content') === DEFAULT_ROUTE;
-        item.hidden = !isDefault;
-      });
-    }
+				if (isActive) {
+					matched = true;
+				}
+			});
 
-    container.setAttribute('data-route-active', matched ? currentRoute : DEFAULT_ROUTE);
-  }
+			if (!matched) {
+				items.forEach((item) => {
+					const isDefault = item.getAttribute("data-route-content") === DEFAULT_ROUTE;
+					item.hidden = !isDefault;
+				});
+			}
 
-  function handleClick(event) {
-    const trigger = event.target.closest('[data-route-switch]');
-    if (!trigger) return;
+			container.setAttribute("data-route-active", matched ? currentRoute : DEFAULT_ROUTE);
+		});
+	}
 
-    event.preventDefault();
+	function setRoute(route, { replace = false } = {}) {
+		if (!route) return;
 
-    const route = trigger.getAttribute('data-route-switch');
-    if (!route) return;
+		const currentRoute = getCurrentRoute();
+		if (route === currentRoute) return;
 
-    setRoute(route);
-  }
+		const url = getUrl();
+		url.searchParams.set(PARAM_NAME, route);
 
-  function init() {
-    ensureRouteParam();
-    render();
+		const method = replace ? "replaceState" : "pushState";
+		history[method](buildState(route), "", url.toString());
 
-    window.addEventListener('popstate', render);
-    document.addEventListener('click', handleClick);
-  }
+		console.log("[content-router] setRoute", {
+			route,
+			replace,
+			url: url.toString(),
+			state: history.state,
+		});
 
-  init();
+		render();
+	}
 
-  window.routeContentSwitcher = {
-    setRoute,
-    render,
-    getCurrentRoute
-  };
+	function handleClick(event) {
+		const trigger = event.target.closest(TRIGGER_SELECTOR);
+		if (!trigger) return;
+
+		event.preventDefault();
+
+		const route = trigger.getAttribute("data-route-switch");
+		if (!route) return;
+
+		setRoute(route);
+	}
+
+	function handlePopState(event) {
+		console.log("[content-router] popstate", {
+			state: event.state,
+			url: window.location.href,
+		});
+
+		render();
+	}
+
+	function handleBeforeUnload() {
+		console.log("[content-router] beforeunload", {
+			url: window.location.href,
+		});
+	}
+
+	function handlePageShow(event) {
+		console.log("[content-router] pageshow", {
+			persisted: event.persisted,
+			url: window.location.href,
+			state: history.state,
+		});
+	}
+
+	function destroy() {
+		if (!isInitialized) return;
+
+		document.removeEventListener("click", handleClick);
+		window.removeEventListener("popstate", handlePopState);
+		window.removeEventListener("beforeunload", handleBeforeUnload);
+		window.removeEventListener("pageshow", handlePageShow);
+
+		isInitialized = false;
+	}
+
+	function init() {
+		if (isInitialized) return;
+
+		isInitialized = true;
+
+		ensureRouteParam();
+		render();
+
+		document.addEventListener("click", handleClick);
+		window.addEventListener("popstate", handlePopState);
+		window.addEventListener("beforeunload", handleBeforeUnload);
+		window.addEventListener("pageshow", handlePageShow);
+	}
+
+	init();
+
+	window.routeContentSwitcher = {
+		init,
+		destroy,
+		render,
+		setRoute,
+		getCurrentRoute,
+	};
 }

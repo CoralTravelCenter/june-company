@@ -1,6 +1,4 @@
 {
-  "assetsPrefix": "landing-pages/june-company",
-  "blocks": [
-    "welcome"
-  ]
+	"assetsPrefix": "landing-pages/june-company",
+	"blocks": ["welcome"]
 }
