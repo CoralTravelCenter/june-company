@@ -1,0 +1,239 @@
+@use "./tokens" as *;
+
+.benefits-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (min-width: $bp-md) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: $bp-lg) {
+    display: flex;
+  }
+}
+
+.benefits-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (min-width: $bp-md) {
+    display: contents;
+  }
+
+  @media (min-width: $bp-lg) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    transition: grid-template-columns 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+.feature-card {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 310px;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 20px;
+  background: #2d6f7a;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  @media (min-width: $bp-md) {
+    width: auto;
+  }
+
+  @media (min-width: $bp-xl) {
+    min-height: 260px;
+  }
+
+  @media (min-width: $bp-lg) {
+    &:hover,
+    &:focus-within {
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.16);
+    }
+  }
+}
+
+@media (min-width: $bp-lg) {
+  .benefits-row:has(> .feature-card:nth-child(1):hover),
+  .benefits-row:has(> .feature-card:nth-child(1):focus-within) {
+    grid-template-columns: 1.28fr 0.86fr 0.86fr;
+  }
+
+  .benefits-row:has(> .feature-card:nth-child(2):hover),
+  .benefits-row:has(> .feature-card:nth-child(2):focus-within) {
+    grid-template-columns: 0.86fr 1.28fr 0.86fr;
+  }
+
+  .benefits-row:has(> .feature-card:nth-child(3):hover),
+  .benefits-row:has(> .feature-card:nth-child(3):focus-within) {
+    grid-template-columns: 0.86fr 0.86fr 1.28fr;
+  }
+}
+
+.feature-card__bg,
+.feature-card__overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transition: opacity 0.45s ease,
+  transform 0.6s ease,
+  filter 0.6s ease;
+}
+
+.feature-card__bg {
+  transform: scale(1);
+  filter: brightness(0.9);
+  z-index: 0;
+}
+
+.feature-card__overlay {
+  z-index: 1;
+  opacity: 0;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.feature-card:hover .feature-card__bg,
+.feature-card:focus-within .feature-card__bg,
+.feature-card.feature-card--in-view .feature-card__bg {
+  transform: scale(1.12);
+  filter: blur(16px) brightness(0.78) saturate(1.05);
+}
+
+.feature-card:hover .feature-card__overlay,
+.feature-card:focus-within .feature-card__overlay,
+.feature-card.feature-card--in-view .feature-card__overlay {
+  opacity: 1;
+}
+
+.feature-card__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  transition: opacity 0.35s ease,
+  visibility 0.35s ease;
+}
+
+.feature-card__content--front {
+  justify-content: space-between;
+  opacity: 1;
+  visibility: visible;
+}
+
+.feature-card__content--hover {
+  gap: 16px;
+  justify-content: flex-start;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.feature-card:hover .feature-card__content--front,
+.feature-card:focus-within .feature-card__content--front,
+.feature-card.feature-card--in-view .feature-card__content--front {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.feature-card:hover .feature-card__content--hover,
+.feature-card:focus-within .feature-card__content--hover,
+.feature-card.feature-card--in-view .feature-card__content--hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.feature-card__title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.feature-card__text {
+  max-width: 980px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.95);
+  text-wrap: balance;
+}
+
+.feature-card--beach .feature-card__bg {
+  @include cover-background("/welcome/benefits/beach.webp");
+}
+
+.feature-card--weather .feature-card__bg {
+  @include cover-background("/welcome/benefits/weather.webp");
+}
+
+.feature-card--activity .feature-card__bg {
+  @include cover-background("/welcome/benefits/activities.webp");
+}
+
+.feature-card--entertainment .feature-card__bg {
+  @include cover-background("/welcome/benefits/entertainment.webp");
+}
+
+.feature-card--care .feature-card__bg {
+  @include cover-background("/welcome/benefits/care.webp");
+}
+
+.feature-card--transfer .feature-card__bg {
+  @include cover-background("/welcome/benefits/transfer.webp");
+}
+
+.feature-card--couple-adults-only .feature-card__bg {
+  @include cover-background("/welcome/benefits/couple-adults-only.webp");
+}
+
+.feature-card--couple-spa .feature-card__bg {
+  @include cover-background("/welcome/benefits/couple-spa.webp");
+}
+
+.feature-card--couple-restaurants .feature-card__bg {
+  @include cover-background("/welcome/benefits/couple-restaurants.webp");
+}
+
+.feature-card--couple-sunsets .feature-card__bg {
+  @include cover-background("/welcome/benefits/couple-sunsets.webp");
+}
+
+.feature-card--couple-private-beaches .feature-card__bg {
+  @include cover-background("/welcome/benefits/couple-private-beaches.webp");
+}
+
+.feature-card--couple-excursions .feature-card__bg {
+  @include cover-background("/welcome/benefits/couple-excursions.webp");
+}
+
+.feature-card--solo-room .feature-card__bg {
+  @include cover-background("/welcome/benefits/solo-room.webp");
+}
+
+.feature-card--solo-reset .feature-card__bg {
+  @include cover-background("/welcome/benefits/solo-reset.webp");
+}
+
+.feature-card--solo-connections .feature-card__bg {
+  @include cover-background("/welcome/benefits/solo-connections.webp");
+}
+
+.feature-card--solo-freedom .feature-card__bg {
+  @include cover-background("/welcome/benefits/solo-freedom.webp");
+}
+
+.feature-card--solo-excursions .feature-card__bg {
+  @include cover-background("/welcome/benefits/solo-excursions.webp");
+}
+
+.feature-card--solo-shopping .feature-card__bg {
+  @include cover-background("/welcome/benefits/solo-shopping.webp");
+}

@@ -1,0 +1,27 @@
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+$bp-xxl: 1440px;
+
+@mixin cover-background($image) {
+	background-image: url($image);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+@mixin responsive-card-background($mobile, $tablet: null, $desktop: null) {
+	@include cover-background($mobile);
+
+	@if $tablet {
+		@media (min-width: $bp-md) {
+			@include cover-background($tablet);
+		}
+	}
+
+	@if $desktop {
+		@media (min-width: $bp-lg) {
+			@include cover-background($desktop);
+		}
+	}
+}

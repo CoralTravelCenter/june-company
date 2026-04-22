@@ -30,6 +30,25 @@ export async function setupLocalCdnAssetRewrite({
     if (nextCss !== css) el.textContent = nextCss;
   };
 
+  const rewriteStyleNode = (node) => {
+    if (!node) return;
+
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      if (node.tagName?.toLowerCase?.() === "style") {
+        rewriteStyleTag(node);
+      }
+      node.querySelectorAll?.("style").forEach(rewriteStyleTag);
+      return;
+    }
+
+    if (node.nodeType === Node.TEXT_NODE) {
+      const styleEl = node.parentElement;
+      if (styleEl?.tagName?.toLowerCase?.() === "style") {
+        rewriteStyleTag(styleEl);
+      }
+    }
+  };
+
   const rewriteSrcset = (srcset) => {
     if (!srcset || typeof srcset !== "string") return srcset;
     return srcset
@@ -99,17 +118,20 @@ export async function setupLocalCdnAssetRewrite({
   const styleMo = new MutationObserver((mutations) => {
     for (const m of mutations) {
       if (m.type === "childList") {
-        m.addedNodes.forEach((n) => {
-          if (n?.tagName?.toLowerCase?.() === "style") {
-            rewriteStyleTag(n);
-          }
-        });
+        m.addedNodes.forEach(rewriteStyleNode);
+        continue;
+      }
+
+      if (m.type === "characterData") {
+        rewriteStyleNode(m.target);
       }
     }
   });
 
   styleMo.observe(document.head || document.documentElement, {
     childList: true,
+    subtree: true,
+    characterData: true,
   });
 
   return () => {

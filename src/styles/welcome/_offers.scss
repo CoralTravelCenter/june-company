@@ -1,0 +1,63 @@
+.offers-tabs {
+  margin-top: 32px;
+  position: relative;
+
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #FFF7E6;
+    width: 100vw;
+    height: 100%;
+    z-index: 1;
+    display: block;
+  }
+}
+
+.offers-tabs__panel {
+  display: none;
+}
+
+.offers-tabs__panel.is-active {
+  display: block;
+}
+
+.offers-tabs__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-block: 24px;
+}
+
+.offers-tabs__button {
+  padding: 12px 20px;
+  border-radius: var(--radius-borderRadiusXXL, 24px);
+  border: 1px solid #000;
+  background: transparent;
+  cursor: pointer;
+}
+
+.el-affix {
+  display: none;
+}
+
+.offers-tabs__button.is-active {
+  background: #0093d0;
+  border-color: #0093d0;
+  color: white;
+}
+
+.row-outer-container .row-container {
+  overflow: visible !important;
+}
+
+.offre-vue {
+  width: 100%;
+}

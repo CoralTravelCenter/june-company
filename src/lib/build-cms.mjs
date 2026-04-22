@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import {build} from "vite";
 import vue from "@vitejs/plugin-vue";
+import posthtml from "posthtml";
+import posthtmlInclude from "posthtml-include";
 
 import {cleanDir, ensureDir, existsFile, normalizeHtml, r, readBlocks} from "./_utils.mjs";
 
@@ -112,6 +114,18 @@ try { if (typeof init === "function") init(); } catch (e) { console.warn(e); }
 
 // ---------- block build ----------
 
+async function buildHtml(absHtmlPath) {
+  const source = fs.readFileSync(absHtmlPath, "utf8");
+  const result = await posthtml([
+    posthtmlInclude({
+      root: path.dirname(absHtmlPath),
+      encoding: "utf-8",
+    }),
+  ]).process(source);
+
+  return normalizeHtml(result.html);
+}
+
 async function buildBlock(key) {
   const htmlPath = path.join(MARKUP_DIR, `${key}.html`);
   if (!existsFile(htmlPath)) return null;
@@ -120,7 +134,7 @@ async function buildBlock(key) {
   const cssPathCss = path.join(STYLES_DIR, `${key}.css`);
   const jsPath = path.join(SCRIPTS_DIR, `${key}.js`);
 
-  const html = normalizeHtml(fs.readFileSync(htmlPath, "utf8"));
+  const html = await buildHtml(htmlPath);
 
   // приоритет: scss -> css
   const cssPath = existsFile(cssPathScss)

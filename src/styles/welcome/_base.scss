@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+p,
+a {
+  margin: 0;
+  padding: 0;
+}
+
+.coral {
+  padding-block: 32px;
+
+  h2 {
+    margin-bottom: 24px;
+    font-size: 32px;
+    line-height: 32px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+
+.welcome-router__title {
+  margin: 48px 0 32px;
+  font-size: 36px;
+  line-height: 1.15;
+}
+
+.coral-main-btn.white:hover {
+  border-color: #66d1ff;
+  background: #fff;
+  color: #66d1ff !important;
+}

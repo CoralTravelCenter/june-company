@@ -1,0 +1,95 @@
+@use "./tokens" as *;
+
+.related-destinations {
+  h2 {
+    margin-bottom: 20px;
+  }
+}
+
+.related-destinations__grid {
+  display: grid;
+  gap: 16px;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.related-destination-card {
+  position: relative;
+  min-height: 204px;
+  overflow: hidden;
+  border-radius: 24px;
+  isolation: isolate;
+
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(30, 38, 49, 0.5) 0%, rgba(30, 38, 49, 0.18) 42%, rgba(30, 38, 49, 0.08) 100%);
+  }
+}
+
+.related-destination-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 204px;
+  padding: 28px 20px 20px;
+}
+
+.related-destination-card h3 {
+  color: #fff;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+.related-destination-card .coral-main-btn.white {
+  width: fit-content;
+  margin-top: 20px;
+  padding: 14px 20px;
+  border: 1px solid #fff;
+  border-radius: 48px;
+  background: #fff;
+  color: #000;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.related-destination-card--maldives {
+  @include cover-background("/maldives.webp");
+}
+
+.related-destination-card--maldives:before {
+  background: linear-gradient(90deg, rgba(4, 51, 73, 0.24) 0%, rgba(4, 51, 73, 0.08) 40%, rgba(4, 51, 73, 0.04) 100%);
+}
+
+.related-destination-card--thailand {
+  @include cover-background("/tailand.webp");
+}
+
+.related-destination-card--vietnam {
+  @include cover-background("/vietnam.webp");
+}
+
+.related-destination-card--china {
+  @include cover-background("/china.webp");
+}
+
+@media (min-width: $bp-md) {
+  .related-destination-card,
+  .related-destination-card__content {
+    min-height: 236px;
+  }
+
+  .related-destination-card__content {
+    padding: 28px 24px 20px;
+  }
+}

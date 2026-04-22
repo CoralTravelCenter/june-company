@@ -17,11 +17,13 @@
     "check": "node src/lib/check-assets-prefix.mjs",
     "block:add": "node src/lib/block-add.mjs",
     "block:rename": "node src/lib/block-rename.mjs",
-    "build": "node src/lib/build-cms.mjs && node src/lib/rewriteAssetsBuild.mjs"
+    "build": "npm run gen:all && node src/lib/build-cms.mjs && node src/lib/rewriteAssetsBuild.mjs"
   },
   "devDependencies": {
     "chokidar": "^5.0.0",
     "concurrently": "^9.2.1",
+    "posthtml": "^0.16.6",
+    "posthtml-include": "^2.0.1",
     "sass": "^1.97.3",
     "vite": "^5.2.12",
     "vite-plugin-monkey": "^4.0.0"
