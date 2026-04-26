@@ -88,6 +88,10 @@
 }
 
 .feature-card__bg {
+  background-image: var(--feature-card-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   transform: scale(1);
   filter: brightness(0.9);
   z-index: 0;
@@ -166,74 +170,74 @@
   text-wrap: balance;
 }
 
-.feature-card--beach .feature-card__bg {
-  @include cover-background("/welcome/benefits/beach.webp");
+.feature-card--beach {
+  --feature-card-bg: url("/welcome/benefits/beach.webp");
 }
 
-.feature-card--weather .feature-card__bg {
-  @include cover-background("/welcome/benefits/weather.webp");
+.feature-card--weather {
+  --feature-card-bg: url("/welcome/benefits/weather.webp");
 }
 
-.feature-card--activity .feature-card__bg {
-  @include cover-background("/welcome/benefits/activities.webp");
+.feature-card--activity {
+  --feature-card-bg: url("/welcome/benefits/activities.webp");
 }
 
-.feature-card--entertainment .feature-card__bg {
-  @include cover-background("/welcome/benefits/entertainment.webp");
+.feature-card--entertainment {
+  --feature-card-bg: url("/welcome/benefits/entertainment.webp");
 }
 
-.feature-card--care .feature-card__bg {
-  @include cover-background("/welcome/benefits/care.webp");
+.feature-card--care {
+  --feature-card-bg: url("/welcome/benefits/care.webp");
 }
 
-.feature-card--transfer .feature-card__bg {
-  @include cover-background("/welcome/benefits/transfer.webp");
+.feature-card--transfer {
+  --feature-card-bg: url("/welcome/benefits/transfer.webp");
 }
 
-.feature-card--couple-adults-only .feature-card__bg {
-  @include cover-background("/welcome/benefits/couple-adults-only.webp");
+.feature-card--couple-adults-only {
+  --feature-card-bg: url("/welcome/benefits/couple-adults-only.webp");
 }
 
-.feature-card--couple-spa .feature-card__bg {
-  @include cover-background("/welcome/benefits/couple-spa.webp");
+.feature-card--couple-spa {
+  --feature-card-bg: url("/welcome/benefits/couple-spa.webp");
 }
 
-.feature-card--couple-restaurants .feature-card__bg {
-  @include cover-background("/welcome/benefits/couple-restaurants.webp");
+.feature-card--couple-restaurants {
+  --feature-card-bg: url("/welcome/benefits/couple-restaurants.webp");
 }
 
-.feature-card--couple-sunsets .feature-card__bg {
-  @include cover-background("/welcome/benefits/couple-sunsets.webp");
+.feature-card--couple-sunsets {
+  --feature-card-bg: url("/welcome/benefits/couple-sunsets.webp");
 }
 
-.feature-card--couple-private-beaches .feature-card__bg {
-  @include cover-background("/welcome/benefits/couple-private-beaches.webp");
+.feature-card--couple-private-beaches {
+  --feature-card-bg: url("/welcome/benefits/couple-private-beaches.webp");
 }
 
-.feature-card--couple-excursions .feature-card__bg {
-  @include cover-background("/welcome/benefits/couple-excursions.webp");
+.feature-card--couple-excursions {
+  --feature-card-bg: url("/welcome/benefits/couple-excursions.webp");
 }
 
-.feature-card--solo-room .feature-card__bg {
-  @include cover-background("/welcome/benefits/solo-room.webp");
+.feature-card--solo-room {
+  --feature-card-bg: url("/welcome/benefits/solo-room.webp");
 }
 
-.feature-card--solo-reset .feature-card__bg {
-  @include cover-background("/welcome/benefits/solo-reset.webp");
+.feature-card--solo-reset {
+  --feature-card-bg: url("/welcome/benefits/solo-freedom.webp");
 }
 
-.feature-card--solo-connections .feature-card__bg {
-  @include cover-background("/welcome/benefits/solo-connections.webp");
+.feature-card--solo-connections {
+  --feature-card-bg: url("/welcome/benefits/solo-connections.webp");
 }
 
-.feature-card--solo-freedom .feature-card__bg {
-  @include cover-background("/welcome/benefits/solo-freedom.webp");
+.feature-card--solo-freedom {
+  --feature-card-bg: url("/welcome/benefits/solo-reset.webp");
 }
 
-.feature-card--solo-excursions .feature-card__bg {
-  @include cover-background("/welcome/benefits/solo-excursions.webp");
+.feature-card--solo-excursions {
+  --feature-card-bg: url("/welcome/benefits/solo-excursions.webp");
 }
 
-.feature-card--solo-shopping .feature-card__bg {
-  @include cover-background("/welcome/benefits/solo-shopping.webp");
+.feature-card--solo-shopping {
+  --feature-card-bg: url("/welcome/benefits/solo-shopping.webp");
 }

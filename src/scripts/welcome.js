@@ -1,4 +1,5 @@
 import {hostReactAppReady, vimeoAutoPlay} from "../utils/utils.js";
+import {createWelcomeAnalytics} from "./welcome-modules/analytics.js";
 import {createContentRouter} from "./welcome-modules/contentRouter.js";
 import {createFeatureCardsObserver} from "./welcome-modules/featureCardsObserver.js";
 import {createOffersTabs} from "./welcome-modules/offersTabs.js";
@@ -8,20 +9,23 @@ export default async function initContentRouter(root = document) {
     window.routeContentSwitcher.destroy();
   }
 
-  await hostReactAppReady();
-
   const currentRoot = root?.querySelectorAll ? root : document;
-  const contentRouter = createContentRouter(currentRoot);
+  const analytics = createWelcomeAnalytics(currentRoot);
+  const contentRouter = createContentRouter(currentRoot, {
+    onRouteShow: analytics.handleRouteShow,
+  });
   const featureCardsObserver = createFeatureCardsObserver(currentRoot);
   const offersTabs = createOffersTabs(currentRoot);
 
   const init = (nextRoot = currentRoot) => {
+    analytics.init(nextRoot);
     contentRouter.init(nextRoot);
     featureCardsObserver.init(nextRoot);
     offersTabs.init(nextRoot);
   };
 
   const destroy = () => {
+    analytics.destroy();
     offersTabs.destroy();
     featureCardsObserver.destroy();
     contentRouter.destroy();
@@ -37,5 +41,6 @@ export default async function initContentRouter(root = document) {
     getCurrentRoute: contentRouter.getCurrentRoute,
   };
 
+  await hostReactAppReady();
   await vimeoAutoPlay();
 }

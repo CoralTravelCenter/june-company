@@ -28,6 +28,10 @@ a {
   }
 }
 
+.welcome-router:not([data-router-ready="true"]) [data-route-content] {
+  display: none;
+}
+
 .welcome-router__title {
   margin: 48px 0 32px;
   font-size: 36px;

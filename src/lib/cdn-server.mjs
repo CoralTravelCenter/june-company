@@ -34,5 +34,5 @@ app.get("/health", (_req, res) => {
 
 app.listen(PORT, () => {
   console.log(`[CDN] serving ${PUBLIC_DIR}`);
-  console.log(`[CDN] http://localhost:${PORT}/hero-bg.jpg`);
+  console.log(`[CDN] http://localhost:${PORT}`);
 });

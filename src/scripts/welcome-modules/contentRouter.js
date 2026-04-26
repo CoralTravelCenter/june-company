@@ -7,9 +7,10 @@ import {
   TRIGGER_SELECTOR,
 } from "./constants.js";
 
-export function createContentRouter(root = document) {
+export function createContentRouter(root = document, {onRouteShow} = {}) {
   let isInitialized = false;
   let currentRoot = root?.querySelectorAll ? root : document;
+  let lastActiveRoute = null;
 
   const getUrl = () => new URL(window.location.href);
 
@@ -57,6 +58,12 @@ export function createContentRouter(root = document) {
       }
 
       container.setAttribute("data-route-active", activeRoute);
+      container.setAttribute("data-router-ready", "true");
+
+      if (activeRoute !== lastActiveRoute) {
+        lastActiveRoute = activeRoute;
+        onRouteShow?.(activeRoute);
+      }
     }
   };
 
@@ -98,6 +105,7 @@ export function createContentRouter(root = document) {
 
     currentRoot.removeEventListener("click", handleClick);
     window.removeEventListener("popstate", handlePopState);
+    lastActiveRoute = null;
     isInitialized = false;
   };
 
