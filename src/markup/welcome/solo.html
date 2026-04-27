@@ -13,7 +13,7 @@
     </section>
     <section class="coral">
         <p>
-            Для хорошего отдыха не обязательно нужна компания! Соло-путешествие может быть насыщенным, веселым, и, что самое главное, безопасным и комфортным. Турция — прекрасное направление для соло-отдыха: здесь легко перезагрузиться, отправиться навстречу приключениям или просто насладиться тишиной и спокойствием.
+            Для хорошего отдыха не обязательно нужна компания! Соло-путешествие может быть насыщенным, весёлым и, что самое главное, безопасным и комфортным. Турция — прекрасное направление для соло-отдыха: здесь легко перезагрузиться, отправиться навстречу приключениям или просто насладиться тишиной и спокойствием.
         </p>
     </section>
     <section class="coral benefits">
@@ -99,7 +99,7 @@
                     <div class="feature-card__bg"></div>
                     <div class="feature-card__overlay"></div>
                     <div class="feature-card__content feature-card__content--front">
-                        <h3 class="feature-card__title">Весёлые развлечения</h3>
+                        <h3 class="feature-card__title">Шопинг</h3>
                     </div>
                     <div class="feature-card__content feature-card__content--hover">
                         <h3 class="feature-card__title">Шопинг</h3>
@@ -159,6 +159,9 @@
             <button type="button" class="offers-tabs__button" data-offers-tab-trigger="landmarks" aria-selected="true">
                 Рядом с достопримечательностями
             </button>
+            <button type="button" class="offers-tabs__button" data-offers-tab-trigger="shopping" aria-selected="false">
+                Рядом с торговыми центрами
+            </button>
             <button type="button" class="offers-tabs__button" data-offers-tab-trigger="all" aria-selected="false">
                 Все отели
             </button>
@@ -201,6 +204,41 @@
                     }
                 </script>
             </div>
+            <div class="offers-tabs__panel" data-offers-tab-panel="shopping" hidden>
+                <script type="application/json" data-offre-vue>
+                    {
+                        "options": {
+                            "chartersOnly": true,
+                            "groupBy": "countries",
+                            "nights": [
+                                7,
+                                8,
+                                9,
+                                10,
+                                11,
+                                12,
+                                13,
+                                14
+                            ],
+                            "timeframe": {
+                                "fixed": [
+                                    "2026-06-01",
+                                    "2026-06-30"
+                                ],
+                                "monthly": true
+                            },
+                            "wildcardOption": "Все отели",
+                            "sortBy": "price"
+                        },
+                        "hotels": [
+                            899,
+                            9809,
+                            31036,
+                            10083
+                        ]
+                    }
+                </script>
+            </div>
             <div class="offers-tabs__panel" data-offers-tab-panel="all" hidden>
                 <script type="application/json" data-offre-vue>
                     {
@@ -228,28 +266,10 @@
                             "sortBy": "price"
                         },
                         "hotels": [
-                            983,
-                            8194,
-                            970,
-                            465,
-                            12880,
-                            982,
-                            453,
-                            4093,
-                            983,
-                            58809,
-                            10105,
-                            7159,
-                            27053,
-                            46411,
-                            9789,
-                            453,
-                            4239,
-                            8743,
-                            10825,
-                            4239,
-                            8743,
-                            10825,
+                            899,
+                            9809,
+                            31036,
+                            10083,
                             4256,
                             894,
                             3835,

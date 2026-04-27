@@ -1,4 +1,4 @@
-import {ITEM_SELECTOR, TRIGGER_SELECTOR} from "./constants.js";
+import {ITEM_SELECTOR} from "./constants.js";
 
 const YM_COUNTER_ID = 96674199;
 const SEGMENTS = new Set(["solo", "family", "couple"]);
@@ -45,6 +45,7 @@ export function createWelcomeAnalytics(root = document) {
 
   const shownLandingSegments = new Set();
   const shownHotelSegments = new Set();
+  const shownRouteSegments = new Set();
   const activeBenefitTimers = new Map();
 
   let segmentPageShown = false;
@@ -137,18 +138,12 @@ export function createWelcomeAnalytics(root = document) {
       return;
     }
 
+    if (!shownRouteSegments.has(segment)) {
+      reachGoal("june_26_segment_page", {segment});
+      shownRouteSegments.add(segment);
+    }
     sendLandingPageShow(segment);
     observeHotelBlock(segment);
-  };
-
-  const handleClick = (event) => {
-    const trigger = event.target.closest(TRIGGER_SELECTOR);
-    if (!trigger || !currentRoot.contains(trigger)) return;
-
-    const segment = getSegment(trigger.getAttribute("data-route-switch"));
-    if (!segment) return;
-
-    reachGoal("june_26_segment_page", {segment});
   };
 
   const handlePointerOver = (event) => {
@@ -178,7 +173,6 @@ export function createWelcomeAnalytics(root = document) {
     if (isInitialized) return;
 
     currentRoot = nextRoot?.querySelectorAll ? nextRoot : document;
-    currentRoot.addEventListener("click", handleClick);
     currentRoot.addEventListener("pointerover", handlePointerOver);
     currentRoot.addEventListener("pointerout", handlePointerOut);
     currentRoot.addEventListener("focusin", handleFocusIn);
@@ -192,7 +186,6 @@ export function createWelcomeAnalytics(root = document) {
 
     stopAllBenefitTimers();
     stopHotelObserver();
-    currentRoot.removeEventListener("click", handleClick);
     currentRoot.removeEventListener("pointerover", handlePointerOver);
     currentRoot.removeEventListener("pointerout", handlePointerOut);
     currentRoot.removeEventListener("focusin", handleFocusIn);
