@@ -5,6 +5,8 @@ import {createFeatureCardsObserver} from "./welcome-modules/featureCardsObserver
 import {createOffersTabs} from "./welcome-modules/offersTabs.js";
 
 export default async function initContentRouter(root = document) {
+  await hostReactAppReady();
+  
   if (window.routeContentSwitcher?.destroy) {
     window.routeContentSwitcher.destroy();
   }
@@ -41,6 +43,5 @@ export default async function initContentRouter(root = document) {
     getCurrentRoute: contentRouter.getCurrentRoute,
   };
 
-  await hostReactAppReady();
   await vimeoAutoPlay();
 }
