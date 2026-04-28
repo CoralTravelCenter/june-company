@@ -3,10 +3,11 @@ import {createWelcomeAnalytics} from "./welcome-modules/analytics.js";
 import {createContentRouter} from "./welcome-modules/contentRouter.js";
 import {createFeatureCardsObserver} from "./welcome-modules/featureCardsObserver.js";
 import {createOffersTabs} from "./welcome-modules/offersTabs.js";
+import {setSegmentCookie} from "./welcome-modules/segmentCookie.js";
 
 export default async function initContentRouter(root = document) {
   await hostReactAppReady();
-  
+
   if (window.routeContentSwitcher?.destroy) {
     window.routeContentSwitcher.destroy();
   }
@@ -14,7 +15,10 @@ export default async function initContentRouter(root = document) {
   const currentRoot = root?.querySelectorAll ? root : document;
   const analytics = createWelcomeAnalytics(currentRoot);
   const contentRouter = createContentRouter(currentRoot, {
-    onRouteShow: analytics.handleRouteShow,
+    onRouteShow(route) {
+      setSegmentCookie(route);
+      analytics.handleRouteShow(route);
+    },
   });
   const featureCardsObserver = createFeatureCardsObserver(currentRoot);
   const offersTabs = createOffersTabs(currentRoot);
